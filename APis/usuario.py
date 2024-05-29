@@ -13,14 +13,11 @@ def register():
     nombre = request.json['nombre']
     direccion = request.json['direccion']
     correo = request.json['correo']
-    contrasena = request.json['contrasena']
-    
-    new_usuario = Usuario(apellido, telefono, nombre, direccion, correo, contrasena)
-    
+    contrasena = request.json['contrasena']  
+    new_usuario = Usuario(apellido, telefono, nombre, direccion, correo, contrasena)  
     bd.session.add(new_usuario)
-    bd.session.commit()
-    
-    return usuario_schema.jsonify(new_usuario)
+    bd.session.commit()  
+    return "Guardado"
 
 @usuario_bp.route('/usuarios/login', methods=['POST'])
 def login():

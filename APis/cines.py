@@ -23,7 +23,7 @@ def add_cine():
     bd.session.add(new_cine)
     bd.session.commit()
     
-    return cines_schema.jsonify(new_cine)
+    return "Guarado"
 
 @cines_bp.route('/cines', methods=['GET'])
 @jwt_required()
@@ -74,4 +74,4 @@ def delete_cine(id):
     bd.session.delete(cine)
     bd.session.commit()
     
-    return cines_schema.jsonify(cine)
+    return cines_schema.jsonify(cines_schema.dump(cine))
