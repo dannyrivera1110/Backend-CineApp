@@ -20,7 +20,7 @@ def add_cartelera():
     bd.session.add(new_cartelera)
     bd.session.commit()
     
-    return cartelera_schema.jsonify(new_cartelera)
+    return "Guardado"
 
 @cartelera_bp.route('/cartelera', methods=['GET'])
 def get_carteleras():
@@ -65,4 +65,4 @@ def delete_cartelera(id):
     bd.session.delete(cartelera)
     bd.session.commit()
     
-    return cartelera_schema.jsonify(cartelera)
+    return jsonify(cartelera_schema.dump(cartelera))

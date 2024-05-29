@@ -17,14 +17,3 @@ app.secret_key = "Movil2"
 bd = SQLAlchemy(app)
 ma = Marshmallow(app)
 
-# Función para listar las tablas
-def listar_tablas():
-    inspector = bd.inspect(bd.engine)
-    tablas = inspector.get_table_names()
-    print("Tablas en la base de datos:")
-    for tabla in tablas:
-        print(tabla)
-
-# Llamada a la función para listar las tablas
-if __name__ == "__main__":
-    listar_tablas()

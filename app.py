@@ -1,6 +1,6 @@
 # app.py
 
-from flask import Flask, current_app
+from flask import Flask
 
 from config.bd import app 
 
