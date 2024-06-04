@@ -1,6 +1,6 @@
 
 from config.bd import bd, ma, app
-from werkzeug.security import generate_password_hash
+
 
 class Usuario(bd.Model):
     __tablename__ = 'usuario'

@@ -9,7 +9,7 @@ cines_schema = CinesSchema()
 cineses_schema = CinesSchema(many=True)
 
 @cines_bp.route('/Agregarcines', methods=['POST'])
-@token_required()
+@token_required
 def add_cine():
     nombre = request.json['nombre']
     latitud = request.json['latitud']
@@ -29,14 +29,14 @@ def add_cine():
     return "Guarado"
 
 @cines_bp.route('/Obtenercines', methods=['GET'])
-@token_required()
+@token_required
 def get_cines():
     all_cines = Cines.query.all()
     result = cineses_schema.dump(all_cines)
     return jsonify(result)
 
 @cines_bp.route('/ObtenercineId', methods=['GET'])
-@token_required()
+@token_required
 def get_cine(id):
     id = request.json['id']
     cine = Cines.query.get(id)
@@ -45,7 +45,7 @@ def get_cine(id):
 
 
 @cines_bp.route('/Eliminarcine', methods=['DELETE'])
-@token_required()
+@token_required
 def delete_cine(id):
     id = request.json['id']
     cine = Cines.query.get(id)

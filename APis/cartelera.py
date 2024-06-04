@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from config.bd import bd
 from Models.Cartelera import CarteleraSchema, Cartelera
-
+from config.routeProtection import token_required
 cartelera_bp = Blueprint('cartelera_bp', __name__)
 
 cartelera_schema = CarteleraSchema()
@@ -9,6 +9,7 @@ carteleras_schema = CarteleraSchema(many=True)
 
 
 @cartelera_bp.route('/Agregarcartelera', methods=['POST'])
+@token_required
 def add_cartelera():
     title = request.json['title']
     director = request.json['director']
@@ -28,6 +29,7 @@ def add_cartelera():
     return "Guardado"
 
 @cartelera_bp.route('/Obtenercarteleras', methods=['GET'])
+@token_required
 def get_carteleras():
     all_carteleras = Cartelera.query.all()
     result = carteleras_schema.dump(all_carteleras)
@@ -41,6 +43,7 @@ def get_cartelera(id):
 
 
 @cartelera_bp.route('/Eliminarcartelera', methods=['DELETE'])
+@token_required
 def delete_cartelera(id):
     id = request.json['id']
     cartelera = Cartelera.query.get(id)

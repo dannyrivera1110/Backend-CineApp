@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from config.bd import bd
-from Models.User import Usuario, UsuarioSchema, usuarios_schema 
-from config.Token import generar_token
+from Models.User import Usuario, UsuarioSchema 
+from config.Token import generate_token
 from config.routeProtection import token_required
 
 usuario_bp = Blueprint('usuario_bp', __name__)
@@ -41,7 +41,7 @@ def login():
          return jsonify({"message": "Password Invalido"}), 401
     
     # Generar token JWT
-    token = generar_token(usuario.id, usuario.correo)
+    token = generate_token(usuario.id, usuario.correo)
    
 
 

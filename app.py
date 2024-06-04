@@ -2,7 +2,9 @@
 from flask_cors import CORS
 from config.bd import app
 
-from APis import cartelera_bp, cines_bp, usuario_bp
+from APis.usuario import usuario_bp
+from APis.cines import cines_bp
+from APis.cartelera import cartelera_bp
 
 app.register_blueprint(cartelera_bp, url_prefix='/api')
 app.register_blueprint(cines_bp, url_prefix='/api')

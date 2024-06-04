@@ -11,7 +11,7 @@ class Cartelera(bd.Model):
     categories = bd.Column(bd.String(50))
     isFavorite = bd.Column(bd.Boolean)
     review = bd.Column(bd.String(50))
-    IdCines = bd.Column(bd.Integer, bd.ForeignKey("Cines.id"))
+    IdCines = bd.Column(bd.Integer, bd.ForeignKey("cines.id"))
    
     def __init__(self, title, director, imageUrl, description, horario, categories, isFavorite, review,IdCines):
         self.title = title
