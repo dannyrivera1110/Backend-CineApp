@@ -7,14 +7,13 @@ class Cines(bd.Model):
     nombre = bd.Column(bd.String(100))
     latitud = bd.Column(bd.Float)
     longitud = bd.Column(bd.Float)
-    resenas = bd.Column(bd.JSON)
+    resenas = bd.Column(bd.String(100))
     pelicula_proyectandose = bd.Column(bd.String(100))
     horainicio = bd.Column(bd.String(50))
     imagen = bd.Column(bd.String(100))
     horarios = bd.Column(bd.String(100))
-    IdCartelera = bd.Column(bd.Integer, bd.ForeignKey("Cartelera.id"))
-    cartelera = bd.relationship('Cartelera', backref=bd.backref('cines', lazy=True))
-    def __init__(self, nombre, latitud, longitud, resenas, pelicula_proyectandose, horainicio, imagen, horarios,IdCartelera):
+   
+    def __init__(self, nombre, latitud, longitud, resenas, pelicula_proyectandose, horainicio, imagen, horarios):
         self.nombre = nombre
         self.latitud = latitud
         self.longitud = longitud
@@ -23,7 +22,7 @@ class Cines(bd.Model):
         self.horainicio = horainicio
         self.imagen = imagen
         self.horarios = horarios
-        self.IdCartelera=IdCartelera
+        
 
 with app.app_context():
     bd.create_all()
@@ -32,5 +31,4 @@ class CinesSchema(ma.Schema):
     class Meta:
         fields = ("id", "nombre", "latitud", "longitud", "resenas", "pelicula_proyectandose", "horainicio", "imagen", "horarios","IdCartelera")
 
-cines_schema = CinesSchema()
-cineses_schema = CinesSchema(many=True)
+

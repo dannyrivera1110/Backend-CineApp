@@ -10,7 +10,7 @@ class Usuario(bd.Model):
     nombre = bd.Column(bd.String(50))
     direccion = bd.Column(bd.String(50))
     correo = bd.Column(bd.String(50))
-    contrasena = bd.Column(bd.String(100))  # Incrementar tamaño para almacenar hash
+    contrasena = bd.Column(bd.String(100))  
 
     def __init__(self, apellido, telefono, nombre, direccion, correo, contrasena):
         self.apellido = apellido
@@ -18,7 +18,7 @@ class Usuario(bd.Model):
         self.nombre = nombre
         self.direccion = direccion
         self.correo = correo
-        self.contrasena = generate_password_hash(contrasena)  # Hashear la contraseña
+        self.contrasena = contrasena
         
 with app.app_context():
     bd.create_all()
@@ -27,5 +27,3 @@ class UsuarioSchema(ma.Schema):
     class Meta:
         fields = ("id", "apellido", "telefono", "nombre", "direccion", "correo", "contrasena")
 
-usuario_schema = UsuarioSchema()
-usuarios_schema = UsuarioSchema(many=True)

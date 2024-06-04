@@ -1,12 +1,17 @@
 from flask import Blueprint, request, jsonify
-from flask_jwt_extended import jwt_required, create_access_token
-from werkzeug.security import check_password_hash
 from config.bd import bd
-from Models.User import Usuario, usuario_schema, usuarios_schema 
+from Models.User import Usuario, UsuarioSchema, usuarios_schema 
+from config.Token import generar_token
+from config.routeProtection import token_required
 
 usuario_bp = Blueprint('usuario_bp', __name__)
 
-@usuario_bp.route('/usuarios/register', methods=['POST'])
+
+usuario_schema = UsuarioSchema()
+usuarios_schema = UsuarioSchema(many=True)
+
+
+@usuario_bp.route('/registerU', methods=['POST'])
 def register(): 
     apellido = request.json['apellido']
     telefono = request.json['telefono']
@@ -19,21 +24,29 @@ def register():
     bd.session.commit()  
     return "Guardado"
 
-@usuario_bp.route('/usuarios/login', methods=['POST'])
+
+@usuario_bp.route('/login', methods=['POST'])
 def login():
     correo = request.json['correo']
     contrasena = request.json['contrasena']
+    if not correo or not contrasena:
+        return jsonify({"message": "correo y contrasena son requeridos"}), 400
     
     usuario = Usuario.query.filter_by(correo=correo).first()
+    if not usuario:
+        return jsonify({"message": " Username or password Invalido"}), 401
     
-    if usuario and check_password_hash(usuario.contrasena, contrasena):
-        access_token = create_access_token(identity={'id': usuario.id, 'correo': usuario.correo})
-        return jsonify(access_token=access_token)
-    else:
-        return jsonify({"msg": "Correo o contraseña incorrectos"}), 401
 
-@usuario_bp.route('/usuarios', methods=['GET'])
-@jwt_required()
+    if usuario.contrasena!=contrasena:
+         return jsonify({"message": "Password Invalido"}), 401
+    
+    # Generar token JWT
+    token = generar_token(usuario.id, usuario.correo)
+   
+
+
+@usuario_bp.route('/Obtenerusuarios', methods=['GET'])
+@token_required
 def get_usuarios():
     all_usuarios = Usuario.query.all()
     result = usuarios_schema.dump(all_usuarios)

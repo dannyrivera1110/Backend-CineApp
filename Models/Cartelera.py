@@ -1,7 +1,4 @@
-
 from config.bd import bd, ma, app
-
-
 
 class Cartelera(bd.Model):
     __tablename__ = 'Cartelera'
@@ -14,8 +11,9 @@ class Cartelera(bd.Model):
     categories = bd.Column(bd.String(50))
     isFavorite = bd.Column(bd.Boolean)
     review = bd.Column(bd.String(50))
+    IdCines = bd.Column(bd.Integer, bd.ForeignKey("Cines.id"))
    
-    def __init__(self, title, director, imageUrl, description, horario, categories, isFavorite, review):
+    def __init__(self, title, director, imageUrl, description, horario, categories, isFavorite, review,IdCines):
         self.title = title
         self.director = director
         self.imageUrl = imageUrl
@@ -24,13 +22,12 @@ class Cartelera(bd.Model):
         self.categories = categories
         self.isFavorite = isFavorite
         self.review = review
+        self.IdCines=IdCines
         
 with app.app_context():
     bd.create_all()
 
 class CarteleraSchema(ma.Schema):
     class Meta:
-        fields = ("id", "title", "director", "imageUrl", "description", "horario", "categories", "isFavorite", "review")
+        fields = ("id", "title", "director", "imageUrl", "description", "horario", "categories", "isFavorite", "review","IdCines")
 
-cartelera_schema = CarteleraSchema()
-carteleras_schema = CarteleraSchema(many=True)  
